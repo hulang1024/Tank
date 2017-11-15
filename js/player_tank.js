@@ -43,7 +43,8 @@ class PlayerTank extends Tank {
   }
 
   onKeyUp(key) {
-    if (! Object.values(this._controlls).includes(key))
+    var controlls = this._controlls;
+    if (! [controlls.up, controlls.right, controlls.down, controlls.left].includes(key))
       return;
     this._vx = 0;
     this._vy = 0;
