@@ -1,3 +1,6 @@
+/*
+玩家坦克
+*/
 class PlayerTank extends Tank {
   constructor(game, spec) {
     super(game);
@@ -12,13 +15,15 @@ class PlayerTank extends Tank {
 
   _getBulletSpec() {
     return {
-      power: 2
+      power: 3
     };
   }
 
   _fire() {
+    var play = this._fireBuffered;
     Tank.prototype._fire.call(this);
-    GameAudio.play('attack');
+    if (play)
+      GameAudio.play('attack');
   }
 
   onKeyDown(key) {
@@ -73,7 +78,7 @@ class PlayerTank extends Tank {
   }
 
   draw() {
-    GameImage.drawImage(this.game.context,
+    GameImage.drawImageInMap(this.game.context,
       'playerTank' + this._playerNo + DIR_NAMES[this._dir],
       this._x, this._y,
       TANK_W, TANK_H);

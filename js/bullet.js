@@ -1,4 +1,3 @@
-const BULLET_SIZE = 6;
 
 class Bullet extends Drawable {
   constructor(game, spec) {
@@ -40,12 +39,43 @@ class Bullet extends Drawable {
   update() {
     this._x += this._vx;
     this._y += this._vy;
+
+    if (this._checkCollisionWall()) {
+      this._tank.setFireBuffered(true);
+      this.game.removeChild(this);
+    }
   }
 
   draw() {
-    GameImage.drawImage(this.game.context,
+    GameImage.drawImageInMap(this.game.context,
       'bullet' + DIR_NAMES[this._dir],
       this._x, this._y,
       BULLET_SIZE, BULLET_SIZE);
+  }
+
+
+  /* 检查是否撞到了墙 */
+  _checkCollisionWall() {
+    var b = 0;
+    var bullet = this;
+    switch (this._dir) {
+      case DIR_UP:
+        if(bullet._y < 0)
+          b = 1;
+        break;
+      case DIR_DOWN:
+        if(bullet._y >  this.game.gameMap.getHeight())
+          b = 1;
+        break;
+      case DIR_LEFT:
+        if(bullet._x < 0)
+          b = 1;
+        break;
+      case DIR_RIGHT:
+        if(bullet._x > this.game.gameMap.getWidth())
+          b = 1;
+        break;
+    }
+    return b;
   }
 }

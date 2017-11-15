@@ -1,18 +1,7 @@
-﻿// 方向常量, 用于坦克,子弹参数
-const DIR_NONE = -1;
-const DIR_UP = 0;
-const DIR_DOWN = 1;
-const DIR_LEFT = 2;
-const DIR_RIGHT = 3;
-const DIR_NAMES = ['Up', 'Down', 'Left', 'Right'];
-
-const TANK_W = 32;
-const TANK_H = 32;
-
-const HOST_PLAYER = 1
-const HOST_HOSTILE = 2
-
-// 抽象坦克
+﻿
+/*
+抽象坦克
+*/
 class Tank extends Drawable {
   constructor(game) {
     super();
@@ -20,14 +9,20 @@ class Tank extends Drawable {
 
     this._x = 0;
     this._y = 0;
-    this._speed = 2; // 速度
+    this._speed = 3; // 速度
     this._vx = 0; // x方向速度
     this._vy = 0; // y方向速度
     this._dir = DIR_NONE; // 方位
+    this._hp = 100;  // 血条
+    this._lives = 1; // 多少条命
+    this._fireBuffered = true; // 当前时间是否可以发子弹
     this._host = -1; // 军队,用来区分敌友
   }
 
+  /* 发子弹 */
   _fire() {
+    if (!this._fireBuffered)
+      return;
     // 计算子弹起始位置
     var bulletX, bulletY;
     var margin = BULLET_SIZE;
@@ -56,12 +51,22 @@ class Tank extends Drawable {
     spec.dir = this._dir;
     spec.tank = this;
     this.game.addChild(new Bullet(this.game, spec));
+
+    this._fireBuffered = false;
   }
 
   _getBulletSpec() {
     return {
       power: 0.5
     };
+  }
+
+  setFireBuffered(b) {
+    this._fireBuffered = b;
+  }
+
+  reduceHP(hp) {
+    this._hp -= hp;
   }
 
   update() {
@@ -94,4 +99,5 @@ class Tank extends Drawable {
     this._x += this._vx;
     this._y += this._vy;
   }
+
 }

@@ -20,7 +20,7 @@ class Drawable {
   removeChild(d) {
     var i = this._children.indexOf(d);
     if (i > 0) {
-      this._children.split(i, 1);
+      this._children.splice(i, 1);
     }
   }
 

@@ -5,7 +5,7 @@ var GameImage = (function() {
   // 主切片集图片
   var collImage;
 
-  // 主切片数据 {name: [sx, sy, swidth, sheight],...]
+  // 主切片数据 {name: [sx, sy],...]
   var sliceDataMap = {};
 
   init();
@@ -14,19 +14,24 @@ var GameImage = (function() {
     /// 初始化切片数据
 
     // 初始化玩家坦克, 名字格式:例如 玩家1方向上 = playerTank1Up
-    const TANK_W = 32, TANK_H = 32;
-    const DIR_NAMES = ['Up', 'Down', 'Left', 'Right'];
     for (var p = 0; p < 2; p++) {
       for (var d = 0; d < 4; d++) {
-        sliceDataMap['playerTank' + (p + 1) + DIR_NAMES[d]] = [p * TANK_W * 4 + TANK_W * d, 0, TANK_W, TANK_H];
+        sliceDataMap['playerTank' + (p + 1) + DIR_NAMES[d]] = [p * 4 * TANK_W + d * TANK_W, 0];
       }
     }
 
     // 子弹
-    const BULLET_W = 6, BULLET_H = 6;
     for (var d = 0; d < 4; d++) {
-      sliceDataMap['bullet' + DIR_NAMES[d]] = [80 + BULLET_W * d, 96, BULLET_W, BULLET_H];
+      sliceDataMap['bullet' + DIR_NAMES[d]] = [80 + d * BULLET_SIZE, 96];
     }
+
+    // 地图块
+    for (var i = 0; i < 5; i++) {
+      sliceDataMap[BLOCK_NAMES[i]] = [0 + i * BLOCK_W, 96];
+    }
+
+    sliceDataMap['home'] = [256, 0];
+
   }
 
   return {
@@ -54,6 +59,10 @@ var GameImage = (function() {
       return imageMap[name];
     },
 
+    drawImageInMap: function(context, name, x, y, width, height) {
+      GameImage.drawImage(context, name, MAP_BASE_X + x, MAP_BASE_Y + y, width, height);
+    },
+
     /*
     @param context
     @param name 图片名
@@ -65,7 +74,7 @@ var GameImage = (function() {
     drawImage: function(context, name, x, y, width, height) {
       var sliceData = sliceDataMap[name];
       context.drawImage(collImage,
-        sliceData[0], sliceData[1], sliceData[2], sliceData[3],
+        sliceData[0], sliceData[1], width, height,
         x, y, width, height);
     }
   };
