@@ -5,8 +5,8 @@ const HOST_HOSTILE = 2;
 玩家坦克
 */
 class PlayerTank extends Tank {
-  constructor(game, spec) {
-    super(game);
+  constructor (scene, spec) {
+    super(scene);
 
     this._x = spec.x;
     this._y = spec.y;
@@ -16,21 +16,21 @@ class PlayerTank extends Tank {
     this._controlls = spec.controlls;
   }
 
-  _getBulletSpec() {
+  _getBulletSpec () {
     return {
       power: 3
     };
   }
 
-  _fire() {
-    var play = this._fireBuffered;
+  _fire () {
+    let play = this._fireBuffered;
     Tank.prototype._fire.call(this);
     if (play)
       GameAudio.play('attack');
   }
 
-  onKeyDown(key) {
-    var controlls = this._controlls;
+  onKeyDown (key) {
+    let controlls = this._controlls;
     switch (key) {
       case controlls.up:
         this._move(DIR_UP);
@@ -44,21 +44,22 @@ class PlayerTank extends Tank {
       case controlls.right:
         this._move(DIR_RIGHT);
         break;
-      case controlls.fire:
-        this._fire();
-        break;
+      default:
+        if (Array.isArray(controlls.fire) ? controlls.fire.includes(key) : controlls.fire == key) {
+          this._fire();
+        }
     }
   }
 
-  onKeyUp(key) {
-    var controlls = this._controlls;
+  onKeyUp (key) {
+    let controlls = this._controlls;
     if (! [controlls.up, controlls.right, controlls.down, controlls.left].includes(key))
       return;
     this._vx = 0;
     this._vy = 0;
   }
 
-  _move(dir) {
+  _move (dir) {
     switch (dir) {
       case DIR_UP:
         this._vx = 0;
@@ -80,8 +81,8 @@ class PlayerTank extends Tank {
     this._dir = dir;
   }
 
-  draw() {
-    GameImage.drawImageInMap(this.game.context,
+  draw () {
+    this.scene.tankLayer.drawImage(
       'playerTank' + this._playerNo + DIR_NAMES[this._dir],
       this._x, this._y,
       TANK_W, TANK_H);

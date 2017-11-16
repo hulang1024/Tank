@@ -1,29 +1,29 @@
 
-var GameAudio = (function() {
-  var audioMap = {};
+var GameAudio = (function () {
+  var audioMap = new Map();
 
   return {
-    load: function(success) {
+    load: function (success) {
       // load audios
-      var filenames = ['attack.mp3', 'bulletCrack.mp3', 'move.mp3', 'playerCrack.mp3', 'prop.mp3', 'start.mp3', 'tankCrack.mp3'];
-      var loadCnt = 0;
-      for (var name of filenames) {
-        var audio = new Audio();
+      const filenames = ['attack.mp3', 'bulletCrack.mp3', 'move.mp3', 'playerCrack.mp3', 'prop.mp3', 'start.mp3', 'tankCrack.mp3'];
+      let loadCnt = 0;
+      for (let name of filenames) {
+        let audio = new Audio();
         audio.src = 'res/' + name;
-        audio.onloadeddata = function() {
+        audio.onloadeddata = function () {
           loadCnt++;
           if (loadCnt == filenames.length) {
             success();
           }
         };
         // 加入map
-        audioMap[name.substring(0, name.lastIndexOf('.'))] = audio;
+        audioMap.set(name.substring(0, name.lastIndexOf('.')), audio);
       }
     },
 
-    play: function(name) {
-      setTimeout(function() {
-        audioMap[name].play();
+    play: function (name) {
+      setTimeout(function () {
+        audioMap.get(name).play();
       }, 0);
     }
   };
