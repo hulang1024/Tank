@@ -40,6 +40,10 @@ class Tank extends Drawable {
   }
 
   update () {
+    if (this._vx == 0 && this._vy == 0) {
+      return;
+    }
+
     let map = this.scene.gameMap;
     // 判断x是否撞到墙
     if (this._vx < 0) {
@@ -71,6 +75,7 @@ class Tank extends Drawable {
 
     // 增加向量之后检查碰撞
     if (this._checkCollision()) {
+      console.log('collision');
       // 恢复上个位置
       this._x -= this._vx;
       this._y -= this._vy;
@@ -124,31 +129,7 @@ class Tank extends Drawable {
   /* 检查坦克是否与前面其它物体碰撞 */
   _checkCollision () {
     let ret = false;
-    let me = this;
-    let objects = this.scene.getAllDrawables();
-    for (var other of objects) {
-      if (!other || other === this) continue; // 排除null和自己
-      if (!(other instanceof Tank) && !other.isBarrier()) continue; // 排除非障碍物,例如可直接穿越的草丛
-      switch (this._dir) {
-        case DIR_UP:
-          if(other.getY() + other.getHeight() == me._y && Math.abs(other.getX() - me._x) < other.getWidth())
-            ret = true;
-          break;
-        case DIR_DOWN:
-          if(other.getY() == me._y + TANK_H && Math.abs(other.getX() - me._x) < other.getWidth())
-            ret = true;
-          break;
-        case DIR_LEFT:
-          if(other.getX() + other.getWidth() == me._x && Math.abs(other.getY() - me._y) <  other.getHeight())
-            ret = true;
-          break;
-        case DIR_RIGHT:
-          if(other.getX() == me._x + TANK_W && Math.abs(other.getY() - me._y) <  other.getHeight())
-            ret = true;
-          break;
-      }
-      if (ret) break;
-    }
+
 
     return ret;
   }

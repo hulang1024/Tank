@@ -32,11 +32,11 @@ class TankWarGame {
 
     document.addEventListener('keydown', function (event) {
       let key = event.keyCode;
-      game.nowScene.onKeyDown(key);
+      game.nowScene.onKeyDown(event, key);
     });
     document.addEventListener('keyup', function (event) {
       let key = event.keyCode;
-      game.nowScene.onKeyUp(key);
+      game.nowScene.onKeyUp(event, key);
     });
   }
 

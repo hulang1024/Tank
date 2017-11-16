@@ -29,7 +29,9 @@ class PlayerTank extends Tank {
       GameAudio.play('attack');
   }
 
-  onKeyDown (key) {
+  onKeyDown (event, key) {
+    if (event.repeat)
+      return;
     let controlls = this._controlls;
     switch (key) {
       case controlls.up:
@@ -51,12 +53,13 @@ class PlayerTank extends Tank {
     }
   }
 
-  onKeyUp (key) {
+  onKeyUp (event, key) {
     let controlls = this._controlls;
     if (! [controlls.up, controlls.right, controlls.down, controlls.left].includes(key))
       return;
     this._vx = 0;
     this._vy = 0;
+    console.log(this._x, this._y);
   }
 
   _move (dir) {

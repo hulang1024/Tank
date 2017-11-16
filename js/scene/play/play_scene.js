@@ -1,4 +1,4 @@
-/*
+﻿/*
 主场景
 */
 class PlayScene extends Scene {
@@ -15,6 +15,8 @@ class PlayScene extends Scene {
     this.addLayer(playScene.tankLayer = new TankLayer());
     // 创建草地层
     this.addLayer(playScene.grassLayer = new GrassLayer());
+
+    this.addChild(playScene.tankLayer);
 
     this.gameMap = new GameMap(playScene, map1);
 
