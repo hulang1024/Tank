@@ -1,3 +1,6 @@
+const CANVAS_W = 512;
+const CANVAS_H = 448;
+
 /*
 坦克大战主类
 */
@@ -37,11 +40,14 @@ class TankGame extends Drawable {
 
       game.gameMap = GameMap.instance(game);
       game.gameMap.draw();
+      /// VS CPU模式
       // 创建玩家1
       var playerTank1 = new PlayerTank(game, {
         playerNo: 1,
         x: 4 * BLOCK_W * 2,
         y: MAP_H - TANK_H,
+        dir: DIR_UP,
+        host: HOST_PLAYER,
         controlls: {
           up: Keys.W, down: Keys.S, left: Keys.A, right: Keys.D, fire: Keys.J
         }
@@ -51,6 +57,8 @@ class TankGame extends Drawable {
         playerNo: 2,
         x: 8 * BLOCK_W * 2,
         y: MAP_H - TANK_H,
+        dir: DIR_UP,
+        host: HOST_PLAYER,
         controlls: {
           up: Keys.Up, down: Keys.Down, left: Keys.Left, right: Keys.Right, fire: Keys.Number1
         }

@@ -1,5 +1,5 @@
+// 按键常量
 var Keys = {};
-
 (function() {
   Keys = {
     Left: 37,
@@ -7,10 +7,10 @@ var Keys = {};
     Right: 39,
     Down: 40
   };
-  
+
   // 数字按键
   for (var i = 0; i < 10; i++) {
-    Keys[ 'Number' + i] = 48 + i;
+    Keys['Number' + i] = 48 + i;
   }
   // 字母按键
   for (var i = 0; i < 26; i++) {

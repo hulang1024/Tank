@@ -8,8 +8,6 @@ var GameImage = (function() {
   // 主切片数据 {name: [sx, sy],...]
   var sliceDataMap = {};
 
-  init();
-
   function init() {
     /// 初始化切片数据
 
@@ -53,6 +51,8 @@ var GameImage = (function() {
       }
 
       collImage = this.getByName('coll');
+
+      init();
     },
 
     getByName: function(name) {

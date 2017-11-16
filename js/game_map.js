@@ -1,5 +1,34 @@
+// 地图位置
+const MAP_BASE_X = 32;
+const MAP_BASE_Y = 16;
+// 地图尺寸
+const MAP_W = 416;
+const MAP_H = 416;
+// 地图行列数
+const MAP_ROWS = 26;
+const MAP_COLS = 26;
+// 块尺寸
+const BLOCK_W = MAP_W / MAP_ROWS;
+const BLOCK_H = MAP_H / MAP_COLS;
+// "家"尺寸
+const HOME_W = 32;
+const HOME_H = 32;
+// 地图中的块物体
+const BLOCK_EMPTY = 0;
+const BLOCK_CEMENT_BRICK = 1;
+const BLOCK_STEEL_BRICK = 2;
+const BLOCK_GRASS = 3;
+const BLOCK_WATER = 4;
+const BLOCK_ICE = 5;
+const BLOCK_NAMES = ['cementBrick', 'steelBrick', 'grass', 'water', 'ice'];
+const HOME = 9;
+const ANOTHRE_HOME = 8;
+
 let gameMap;
 
+/*
+游戏地图
+*/
 class GameMap extends Drawable {
   constructor(game) {
     super();

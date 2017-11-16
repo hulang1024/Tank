@@ -1,4 +1,8 @@
+const BULLET_SIZE = 6;
 
+/*
+子弹
+*/
 class Bullet extends Drawable {
   constructor(game, spec) {
     super();

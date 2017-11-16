@@ -1,3 +1,13 @@
+// 方向常量, 用于坦克,子弹参数
+const DIR_NONE = -1;
+const DIR_UP = 0;
+const DIR_DOWN = 1;
+const DIR_LEFT = 2;
+const DIR_RIGHT = 3;
+const DIR_NAMES = ['Up', 'Down', 'Left', 'Right'];
+// 坦克尺寸
+const TANK_W = 32;
+const TANK_H = 32;
 ﻿
 /*
 抽象坦克

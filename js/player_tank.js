@@ -1,3 +1,6 @@
+const HOST_PLAYER = 1;
+const HOST_HOSTILE = 2;
+
 /*
 玩家坦克
 */
@@ -7,8 +10,8 @@ class PlayerTank extends Tank {
 
     this._x = spec.x;
     this._y = spec.y;
-    this._dir = DIR_UP;
-    this._host = HOST_PLAYER;
+    this._dir = spec.dir;
+    this._host = spec.host;
     this._playerNo = spec.playerNo;
     this._controlls = spec.controlls;
   }
