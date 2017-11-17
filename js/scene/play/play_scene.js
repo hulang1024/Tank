@@ -22,12 +22,11 @@ class PlayScene extends Scene {
 
     this._tanks = [];
 
+    // 画地图
+    playScene.gameMap.draw();
+
     addPlayers();
-
     function addPlayers () {
-      // 画地图
-      playScene.gameMap.draw();
-
       /// VS CPU模式
       // 创建玩家1
       let playerTank1 = new PlayerTank(playScene, {
@@ -37,11 +36,11 @@ class PlayScene extends Scene {
         dir: DIR_UP,
         host: HOST_PLAYER,
         controlls: {
-          up: KeyEvent.DOM_VK_W,
-          down: KeyEvent.DOM_VK_S,
-          left: KeyEvent.DOM_VK_A,
-          right: KeyEvent.DOM_VK_D,
-          fire: KeyEvent.DOM_VK_J
+          up: Keys.W,
+          down: Keys.S,
+          left: Keys.A,
+          right: Keys.D,
+          fire: Keys.J
         }
       });
 
@@ -53,11 +52,11 @@ class PlayScene extends Scene {
         dir: DIR_UP,
         host: HOST_PLAYER,
         controlls: {
-          up: KeyEvent.DOM_VK_UP,
-          down: KeyEvent.DOM_VK_DOWN,
-          left: KeyEvent.DOM_VK_LEFT,
-          right: KeyEvent.DOM_VK_RIGHT,
-          fire: [KeyEvent.DOM_VK_1, KeyEvent.DOM_VK_NUMPAD1]
+          up: Keys.Up,
+          down: Keys.Down,
+          left: Keys.Left,
+          right: Keys.Right,
+          fire: [Keys.Num1, Keys.NumPad1]
         }
       });
 
