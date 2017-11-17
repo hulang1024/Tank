@@ -14,6 +14,7 @@ class PlayerTank extends Tank {
     this._host = spec.host;
     this._playerNo = spec.playerNo;
     this._controlls = spec.controlls;
+    this.ghost = spec.ghost;
   }
 
   _getBulletSpec () {
@@ -22,47 +23,53 @@ class PlayerTank extends Tank {
     };
   }
 
-  _fire () {
+  fire () {
     let play = this._fireBuffered;
-    Tank.prototype._fire.call(this);
-    if (play)
+    Tank.prototype.fire.call(this);
+    if (play) {
       GameAudio.play('attack');
+      this.ghost && this.ghost.fire();
+    }
   }
 
   onKeyDown (event, key) {
     if (event.repeat)
       return;
     let controlls = this._controlls;
+    if (!controlls)
+      return;
     switch (key) {
       case controlls.up:
-        this._move(DIR_UP);
+        this.move(DIR_UP);
         break;
       case controlls.down:
-        this._move(DIR_DOWN);
+        this.move(DIR_DOWN);
         break;
       case controlls.left:
-        this._move(DIR_LEFT);
+        this.move(DIR_LEFT);
         break;
       case controlls.right:
-        this._move(DIR_RIGHT);
+        this.move(DIR_RIGHT);
         break;
       default:
         if (Array.isArray(controlls.fire) ? controlls.fire.includes(key) : controlls.fire == key) {
-          this._fire();
+          this.fire();
         }
     }
   }
 
   onKeyUp (event, key) {
     let controlls = this._controlls;
+    if (!controlls)
+      return;
     if (! [controlls.up, controlls.right, controlls.down, controlls.left].includes(key))
       return;
     this._vx = 0;
     this._vy = 0;
-    console.log(this._x, this._y);
+    this.ghost && this.ghost.stop();
   }
 
-  _move (dir) {
+  move (dir) {
     switch (dir) {
       case DIR_UP:
         this._vx = 0;
@@ -82,6 +89,12 @@ class PlayerTank extends Tank {
         break;
     }
     this._dir = dir;
+    this.ghost && this.ghost.move(dir);
+  }
+
+  stop () {
+    this._vx = 0;
+    this._vy = 0;
   }
 
   draw () {

@@ -14,7 +14,7 @@ class TankWarGame {
       GameAudio.load(function () {
         game._initEventListeners();
         // 设置当前场景为主场景
-        game.nowScene = new PlayScene(this);
+        game.nowScene = new OnlinePlayScene(this);
         game.nowScene.start();
         game._loop();
       });

@@ -85,7 +85,7 @@ class Tank extends Drawable {
   }
 
   /* 发子弹 */
-  _fire () {
+  fire () {
     if (!this._fireBuffered)
       return;
     // 计算子弹起始位置
