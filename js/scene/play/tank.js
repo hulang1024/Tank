@@ -31,6 +31,8 @@ class Tank extends Drawable {
     this._host = -1; // 军队,用来区分敌友
   }
 
+  getDir () { return this._dir; }
+
   setFireBuffered (b) {
     this._fireBuffered = b;
   }

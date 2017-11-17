@@ -66,7 +66,6 @@ class PlayerTank extends Tank {
       return;
     this._vx = 0;
     this._vy = 0;
-    this.ghost && this.ghost.stop();
   }
 
   move (dir) {
@@ -89,7 +88,20 @@ class PlayerTank extends Tank {
         break;
     }
     this._dir = dir;
-    this.ghost && this.ghost.move(dir);
+  }
+
+  setUpdate (params) {
+    this._dir = params.dir;
+    this._x = params.x;
+    this._y = params.y;
+  }
+
+  update () {
+    if (this._vx == 0 && this._vy == 0) {
+      return;
+    }
+    Tank.prototype.update.call(this);
+    this.ghost && this.ghost.update(this);
   }
 
   stop () {

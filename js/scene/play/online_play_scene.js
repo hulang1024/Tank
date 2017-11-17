@@ -63,11 +63,12 @@ class OnlinePlayScene extends Scene {
         fire: function () {
           socket.emit('message', {to: otherId, type: 5});
         },
-        move: function (dir) {
-          socket.emit('message', {to: otherId, type: dir});
-        },
-        stop: function () {
-          socket.emit('message', {to: otherId, type: 6});
+        update: function (tank) {
+          console.log('emit positionUpdate');
+          socket.emit('message', {
+            to: otherId,
+            type: 6,
+            content: tank.getX() + ',' + tank.getY() + ',' + tank.getDir()});
         }
       }
     });
@@ -108,13 +109,15 @@ class OnlinePlayScene extends Scene {
 
     });
     socket.on("message", function(data){
-      var act = +data.type;
-      if (act == 5) {
+      if (data.type == 5) {
         playerTankHe.fire();
-      } else if (act == 6) {
-        playerTankHe.stop();
-      } else {
-        playerTankHe.move(act);
+      } else if (data.type == 6) {
+        var params = data.content.split(',');
+        playerTankHe.setUpdate({
+          x: params[0],
+          y: params[1],
+          dir: params[2]
+        });
       }
     });
   }
