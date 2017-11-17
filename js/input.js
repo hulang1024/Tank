@@ -1,6 +1,5 @@
-var Keys = {};
-(function() {
-  Keys = {
+const Keys = (function () {
+  let Keys = {
     Left: 37,
     Up: 38,
     Right: 39,
@@ -20,4 +19,6 @@ var Keys = {};
   }
 
   Object.freeze(Keys);
+
+  return Keys;
 })();

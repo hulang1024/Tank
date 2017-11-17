@@ -1,12 +1,10 @@
 ﻿/*
-主场景
+* 主场景
 */
 class PlayScene extends Scene {
   constructor (game) {
     super();
-
     let playScene = this;
-
     // 创建背景层
     this.addLayer(playScene.backgroundLayer = new BackgroundLayer());
     // 创建障碍层
@@ -70,9 +68,8 @@ class PlayScene extends Scene {
   }
 
   start () {
-    //GameAudio.play('start');
+    // GameAudio.play('start');
   }
-
   stop () {
 
   }
