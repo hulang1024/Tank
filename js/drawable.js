@@ -1,4 +1,7 @@
 let _id = 1;
+/*
+可绘制对象
+*/
 class Drawable {
   constructor () {
     this._x = 0;
@@ -7,7 +10,7 @@ class Drawable {
     this._height = 0;
     this._children = [];
     this._id = _id++;
-    console.log("create Drawable #" + this._id);
+    //console.log("create Drawable #" + this._id);
   }
 
   getX () { return this._x; }
@@ -15,9 +18,13 @@ class Drawable {
   getWidth () { return this._width; }
   getHeight () { return this._height; }
 
+  getId () { return this._id; }
+
   addChild (d) {
     this._children.push(d);
   }
+
+  getChildren () { return this._children; }
 
   removeChild (d) {
     let i = this._children.indexOf(d);

@@ -20,5 +20,8 @@ class MapObject extends Drawable {
 
   getName () { return this._name; }
 
+  // 默认是障碍物
   isBarrier () { return true; }
+
+  setScene (scene) { this.scene = scene; }
 }

@@ -25,7 +25,7 @@ class GameMap extends Drawable {
     this._objects = [];
   }
 
-  _read () {
+  read () {
     for (let r = 0; r < MAP_ROWS; r++) {
       for (let c = 0; c < MAP_COLS; c++) {
         let type = this.mapData[r][c];
@@ -33,6 +33,7 @@ class GameMap extends Drawable {
         if (obj) {
           obj.setX(c * obj.getWidth());
           obj.setY(r * obj.getHeight());
+          obj.setScene(this.scene);
           this._objects.push(obj);
         }
       }
@@ -41,9 +42,15 @@ class GameMap extends Drawable {
 
   getObjects() { return this._objects; }
 
-  draw () {
-    this._read();
+  remove (obj) {
+    var i = this._objects.indexOf(obj);
+    if (i > -1) {
+      this._objects.splice(i, 1);
+      console.log('delete object:' + obj.getId());
+    }
+  }
 
+  draw () {
     let layer = this.scene.barrierLayer;
     layer.context.fillStyle = '#000';
     layer.context.fillRect(0, 0, layer.getWidth(), layer.getHeight());

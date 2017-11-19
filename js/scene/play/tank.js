@@ -19,9 +19,9 @@ class Tank extends Drawable {
 
     this._x = 0;
     this._y = 0;
-    this._width = TANK_W;
-    this._height = TANK_H;
-    this._speed = 3; // 速度
+    this._width = TANK_W - 4; // 为放松碰撞检测减少尺寸
+    this._height = TANK_H - 4;
+    this._speed = 2; // 速度
     this._vx = 0; // x方向速度
     this._vy = 0; // y方向速度
     this._dir = DIR_NONE; // 方位
@@ -75,12 +75,9 @@ class Tank extends Drawable {
 
     // 增加向量之后检查碰撞
     if (this._checkCollision()) {
-      console.log('collision');
       // 恢复上个位置
       this._x -= this._vx;
       this._y -= this._vy;
-      this._vx = 0;
-      this._vy = 0;
     }
   }
 
@@ -98,14 +95,14 @@ class Tank extends Drawable {
         break;
       case DIR_DOWN:
         bulletX = this._x + (TANK_W - BULLET_SIZE) / 2;
-        bulletY = this._y + TANK_H  + margin;
+        bulletY = this._y + TANK_H - margin;
         break;
       case DIR_LEFT:
         bulletX = this._x - margin;
         bulletY = this._y + (TANK_H - BULLET_SIZE) / 2;
         break;
       case DIR_RIGHT:
-        bulletX = this._x + TANK_W + margin;
+        bulletX = this._x + TANK_W - margin;
         bulletY = this._y + (TANK_H - BULLET_SIZE) / 2;
         break;
     }
@@ -129,8 +126,16 @@ class Tank extends Drawable {
   /* 检查坦克是否与前面其它物体碰撞 */
   _checkCollision () {
     let ret = false;
-
-
+    let me = this;
+    let objects = this.scene.getAllDrawables();
+    for (var other of objects) {
+      if (!other || other === this) continue; // 排除null和自己
+      if (!(other instanceof Tank) && !other.isBarrier()) continue; // 排除非障碍物,例如可直接穿越的草丛
+      if (isCollision(me, other)) {
+        ret = true;
+        break;
+      }
+    }
     return ret;
   }
 

@@ -18,7 +18,7 @@ class PlayerTank extends Tank {
 
   _getBulletSpec () {
     return {
-      power: 3
+      power: 4
     };
   }
 
@@ -82,6 +82,8 @@ class PlayerTank extends Tank {
         break;
     }
     this._dir = dir;
+
+    update ();
   }
 
   draw () {

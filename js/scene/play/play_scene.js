@@ -16,12 +16,11 @@ class PlayScene extends Scene {
 
     this.addChild(playScene.tankLayer);
 
-    this.gameMap = new GameMap(playScene, map1);
-
     this._tanks = [];
 
-    // 画地图
-    playScene.gameMap.draw();
+    this.gameMap = new GameMap(playScene, map1);
+    this.gameMap.read();
+    this.gameMap.draw();
 
     addPlayers();
     function addPlayers () {
@@ -68,12 +67,13 @@ class PlayScene extends Scene {
   }
 
   start () {
-    // GameAudio.play('start');
+     //GameAudio.play('start');
   }
   stop () {
 
   }
 
+  //包括坦克,砖块,子弹
   getAllDrawables () {
     return this.gameMap.getObjects().concat(this._tanks);
   }

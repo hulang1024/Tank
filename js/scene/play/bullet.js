@@ -14,6 +14,9 @@ class Bullet extends Drawable {
     this._power = spec.power;
     this._tank = spec.tank;
 
+    this._width = BULLET_SIZE + 2;
+    this._height = BULLET_SIZE + 2;
+
     // 根据power确定速度
     let velocity = this._power * 2;
 
@@ -40,6 +43,8 @@ class Bullet extends Drawable {
 
   getTank () { return this._tank; }
 
+  getPower () { return this._power; }
+
   update () {
     this._x += this._vx;
     this._y += this._vy;
@@ -47,7 +52,45 @@ class Bullet extends Drawable {
     if (this._checkCollisionWall()) {
       this._tank.setFireBuffered(true);
       this.scene.tankLayer.removeChild(this);
+      return;
     }
+
+    // 是否撞到实体
+    let ret = false;
+    let objects = this.scene.getAllDrawables();
+    for (var other of objects) {
+      if (!other || other === this) continue; // 排除null和自己
+      if (!(other instanceof Tank) && !other.isBarrier()) continue; // 排除非障碍物,例如可直接穿越的草丛
+      if (isCollision(this, other)) {
+        ret = true;
+        // 如果撞到了子弹
+        if (other instanceof Bullet) {
+          // nothing
+        }
+        // 如果撞到了地图块
+        else if (other instanceof BlockObject) {
+          switch (other.constructor) {
+            case CementBrick:
+            case SteelBrick:
+              other.break(this);
+              break;
+            case Ice:
+            case Water:
+            case Grass:
+              break;
+          }
+        }
+      }
+    }
+
+    if (ret) {
+      this._tank.setFireBuffered(true);
+      // 从层中删除自己
+      this.scene.tankLayer.removeChild(this);
+      // 重绘地图
+      this.scene.gameMap.draw();
+    }
+
   }
 
   draw () {
