@@ -5,7 +5,13 @@ class CementBrick extends BlockObject {
     this._name = "cementBrick";
   }
 
-  break (bullet) {
+  onCollision (other) {
+    if (other instanceof Bullet) {
+      this._break(other);
+    }
+  }
+
+  _break (bullet) {
     // 删除砖块从地图中
     this.scene.gameMap.remove(this);
   }

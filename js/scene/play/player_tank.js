@@ -1,5 +1,3 @@
-const HOST_PLAYER = 1;
-const HOST_HOSTILE = 2;
 
 /*
 玩家坦克
@@ -83,7 +81,7 @@ class PlayerTank extends Tank {
     }
     this._dir = dir;
 
-    update ();
+    this.update ();
   }
 
   draw () {

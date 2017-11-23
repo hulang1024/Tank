@@ -75,7 +75,7 @@ class PlayScene extends Scene {
 
   //包括坦克,砖块,子弹
   getAllDrawables () {
-    return this.gameMap.getObjects().concat(this._tanks);
+    return this.gameMap.getObjects().concat(this._tanks).concat(this.tankLayer.getChildren());
   }
 
   draw() {

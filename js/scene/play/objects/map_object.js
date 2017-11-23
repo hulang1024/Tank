@@ -23,5 +23,11 @@ class MapObject extends Drawable {
   // 默认是障碍物
   isBarrier () { return true; }
 
+  /*
+  被碰撞到
+  @param other
+  */
+  onCollision (other) {}
+
   setScene (scene) { this.scene = scene; }
 }
