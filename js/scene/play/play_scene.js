@@ -67,7 +67,7 @@ class PlayScene extends Scene {
   }
 
   start () {
-     //GameAudio.play('start');
+     GameAudio.play('start');
   }
   stop () {
 
